@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyDi2oHzHdkwtXmEmlzaDvYzoi0mYWcUxOk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>160253048879</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.accidentreport.accidentReportApp</string>
+	<key>PROJECT_ID</key>
+	<string>accidentreportapp-780ef</string>
+	<key>STORAGE_BUCKET</key>
+	<string>accidentreportapp-780ef.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:160253048879:ios:36ab55b6d5169ea1bbaeda</string>
+</dict>
+</plist>

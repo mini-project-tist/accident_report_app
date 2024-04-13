@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "160253048879",
+    "project_id": "accidentreportapp-780ef",
+    "storage_bucket": "accidentreportapp-780ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160253048879:android:0027f2a56fbaf512bbaeda",
+        "android_client_info": {
+          "package_name": "com.accidentreport.accident_report_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZewkSgTMpUWYSk6e0g_fvYhEprpSlutw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
