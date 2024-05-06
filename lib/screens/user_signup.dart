@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:accident_report_app/spacing.dart';
+import 'package:accident_report_app/components/spacing.dart';
+import 'package:accident_report_app/constants.dart';
+import 'package:accident_report_app/components/app_bar_title.dart';
+import 'package:random_string/random_string.dart';
 
 class UserSignUp extends StatefulWidget {
   static const String id = 'user_signup';
@@ -19,17 +22,17 @@ class _UserSignUpState extends State<UserSignUp> {
   String phoneNo = '';
   String password = '';
   String confirmPassword = '';
+  String id = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'User Registration',
-          style: TextStyle(
-              color: Colors.white, fontSize: 30.0, fontWeight: FontWeight.bold),
+        iconTheme: const IconThemeData(
+          color: Colors.white,
         ),
-        backgroundColor: const Color(0xff393186),
+        title: const AppBarTitle(title: 'User Registration'),
+        backgroundColor: darkBlueColour,
       ),
       body: SafeArea(
         child: Padding(
@@ -44,14 +47,14 @@ class _UserSignUpState extends State<UserSignUp> {
                   SizedBox(
                     width: 350.0,
                     child: TextField(
-                      cursorColor: const Color(0xff393186),
-                      style: const TextStyle(color: Color(0xff393186)),
+                      cursorColor: darkBlueColour,
+                      style: const TextStyle(color: darkBlueColour),
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 20.0),
                         hintText: 'Full name',
                         filled: true,
-                        fillColor: Color(0xfff1f4f8),
+                        fillColor: offWhiteColour,
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius:
@@ -67,8 +70,8 @@ class _UserSignUpState extends State<UserSignUp> {
                     width: 350.0,
                     child: TextField(
                       keyboardType: TextInputType.emailAddress,
-                      cursorColor: const Color(0xff393186),
-                      style: const TextStyle(color: Color(0xff393186)),
+                      cursorColor: darkBlueColour,
+                      style: const TextStyle(color: darkBlueColour),
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 20.0),
@@ -90,14 +93,14 @@ class _UserSignUpState extends State<UserSignUp> {
                     width: 350.0,
                     child: TextField(
                       keyboardType: TextInputType.phone,
-                      cursorColor: const Color(0xff393186),
-                      style: const TextStyle(color: Color(0xff393186)),
+                      cursorColor: darkBlueColour,
+                      style: const TextStyle(color: darkBlueColour),
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 20.0),
                         hintText: 'Phone number',
                         filled: true,
-                        fillColor: Color(0xfff1f4f8),
+                        fillColor: offWhiteColour,
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius:
@@ -114,14 +117,14 @@ class _UserSignUpState extends State<UserSignUp> {
                     child: TextField(
                       obscureText: true,
                       obscuringCharacter: '*',
-                      cursorColor: const Color(0xff393186),
-                      style: const TextStyle(color: Color(0xff393186)),
+                      cursorColor: darkBlueColour,
+                      style: const TextStyle(color: darkBlueColour),
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 20.0),
                         hintText: 'Password',
                         filled: true,
-                        fillColor: Color(0xfff1f4f8),
+                        fillColor: offWhiteColour,
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius:
@@ -138,14 +141,14 @@ class _UserSignUpState extends State<UserSignUp> {
                     child: TextField(
                       obscureText: true,
                       obscuringCharacter: '*',
-                      cursorColor: const Color(0xff393186),
-                      style: const TextStyle(color: Color(0xff393186)),
+                      cursorColor: darkBlueColour,
+                      style: const TextStyle(color: darkBlueColour),
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 20.0),
                         hintText: 'Confirm Password',
                         filled: true,
-                        fillColor: Color(0xfff1f4f8),
+                        fillColor: offWhiteColour,
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius:
@@ -163,13 +166,13 @@ class _UserSignUpState extends State<UserSignUp> {
                     width: 230.0,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xff393186),
+                        backgroundColor: darkBlueColour,
                         foregroundColor: Colors.white,
                         textStyle: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20.0),
                         side: const BorderSide(
                           width: 2.0,
-                          color: Color(0xffe4301f),
+                          color: darkOrangeColour,
                         ),
                       ),
                       child: const Text('Register'),
@@ -179,20 +182,22 @@ class _UserSignUpState extends State<UserSignUp> {
                             email: emailAddress,
                             password: password,
                           );
+                          id = randomAlphaNumeric(5);
                           Map<String, dynamic> data = {
                             'full_name': fullName,
                             'email_address': emailAddress,
                             'phone_no': phoneNo,
                             'password': password,
+                            'testimony_id': id,
                           };
                           FirebaseFirestore.instance
                               .collection('users')
                               .doc(credential.user!.uid)
-                              .set(data);
-                          if(credential!=null)
-                            {
-                              Navigator.pop(context);
-                            }
+                              .set(data)
+                              .then((_) {
+                            // After saving user data, show the dialog
+                            openDialog(id);
+                          });
                         } on FirebaseAuthException catch (e) {
                           if (e.code == 'weak-password') {
                             print('The password provided is too weak.');
@@ -213,4 +218,41 @@ class _UserSignUpState extends State<UserSignUp> {
       ),
     );
   }
+  Future<void> openDialog(String id) async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          elevation: 5.0,
+          backgroundColor: Colors.white,
+          child: Container(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('YOUR TESTIMONY ID IS: $id'),
+                const Text('This ID is unique to this account,'),
+                const Text('Please do not forget it.'),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Close the dialog
+                    Navigator.pop(context); // Close the screen
+                  },
+                  child: const Text('Close'),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    ).then((_) {
+      // This code will execute after the dialog is closed
+      Navigator.pop(context); // Close the screen
+    });
+  }
+
 }

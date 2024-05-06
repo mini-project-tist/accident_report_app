@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'user_signup.dart';
 import 'chat.dart';
-import 'package:accident_report_app/spacing.dart';
+import 'package:accident_report_app/components/spacing.dart';
+import 'package:accident_report_app/constants.dart';
+import 'package:accident_report_app/components/app_bar_title.dart';
 
 class UserLogin extends StatefulWidget {
   static const String id = 'user_login';
@@ -21,126 +23,125 @@ class _UserLoginState extends State<UserLogin> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'User Login',
-          style: TextStyle(
-              color: Colors.white, fontSize: 30.0, fontWeight: FontWeight.bold),
+        iconTheme: const IconThemeData(
+          color: Colors.white,
         ),
-        backgroundColor: const Color(0xff393186),
+        title: const AppBarTitle(
+          title: 'User Login',
+        ),
+        backgroundColor: darkBlueColour,
       ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: ListView(
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(
-                    height: 150.0,
-                  ),
-                  SizedBox(
-                    width: 350.0,
-                    child: TextField(
-                      keyboardType: TextInputType.emailAddress,
-                      cursorColor: const Color(0xff393186),
-                      style: const TextStyle(color: Color(0xff393186)),
-                      decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 20.0),
-                        hintText: 'Email',
-                        filled: true,
-                        fillColor: Color(0xfff1f4f8),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15.0))),
-                      ),
-                      onChanged: (value) {
-                        email = value;
-                      },
+              Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      height: 150.0,
                     ),
-                  ),
-                  const Spacing(),
-                  SizedBox(
-                    width: 350.0,
-                    child: TextField(
-                      cursorColor: const Color(0xff393186),
-                      obscureText: true,
-                      obscuringCharacter: '*',
-                      style: const TextStyle(color: Color(0xff393186)),
-                      decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 20.0),
-                        hintText: 'Password',
-                        filled: true,
-                        fillColor: Color(0xfff1f4f8),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15.0))),
-                      ),
-                      onChanged: (value) {
-                        password = value;
-                      },
-                    ),
-                  ),
-                  const Spacing(),
-                  SizedBox(
-                    width: 230.0,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xff393186),
-                        foregroundColor: Colors.white,
-                        textStyle: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20.0),
-                        side: const BorderSide(
-                          width: 2.0,
-                          color: Color(0xffe4301f),
+                    SizedBox(
+                      width: 350.0,
+                      child: TextField(
+                        cursorColor: darkBlueColour,
+                        style: const TextStyle(color: darkBlueColour),
+                        decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 20.0),
+                          hintText: 'Email',
+                          filled: true,
+                          fillColor: offWhiteColour,
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15.0))),
                         ),
-                      ),
-                      child: const Text('Sign In'),
-                      onPressed: () async {
-                        try {
-                          final credential = await FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                            email: email,
-                            password: password,
-                          );
-                          if(credential!=null)
-                            {
-                              Navigator.pushNamed(context, Chat.id);
-                            }
-                        } on FirebaseAuthException catch (e) {
-                          if (e.code == 'user-not-found') {
-                            print('No user found for that email.');
-                          } else if (e.code == 'wrong-password') {
-                            print('Wrong password provided for that user.');
-                          }
-                        }
-                      },
-                    ),
-                  ),
-                  const Spacing(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text('Don\'t have an account?'),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, UserSignUp.id);
+                        onChanged: (value) {
+                          email = value;
                         },
-                        child: const Text(
-                          'Sign up here',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xff393186),
+                      ),
+                    ),
+                    const Spacing(),
+                    SizedBox(
+                      width: 350.0,
+                      child: TextField(
+                        cursorColor: darkBlueColour,
+                        obscureText: true,
+                        obscuringCharacter: '*',
+                        style: const TextStyle(color: darkBlueColour),
+                        decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 20.0),
+                          hintText: 'Password',
+                          filled: true,
+                          fillColor: offWhiteColour,
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15.0))),
+                        ),
+                        onChanged: (value) {
+                          password = value;
+                        },
+                      ),
+                    ),
+                    const Spacing(),
+                    SizedBox(
+                      width: 230.0,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: darkBlueColour,
+                          foregroundColor: Colors.white,
+                          textStyle: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20.0),
+                          side: const BorderSide(
+                            width: 2.0,
+                            color: darkOrangeColour,
                           ),
                         ),
+                        child: const Text('Sign In'),
+                        onPressed: () async {
+                          try {
+                             await FirebaseAuth.instance
+                                .signInWithEmailAndPassword(
+                              email: email,
+                              password: password,
+                            );
+                            Navigator.pushNamed(context, Chat.id);
+                          } on FirebaseAuthException catch (e) {
+                            if (e.code == 'user-not-found') {
+                              print('No user found for that email.');
+                            } else if (e.code == 'wrong-password') {
+                              print('Wrong password provided for that user.');
+                            }
+                          }
+                        },
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                    const Spacing(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('Don\'t have an account?'),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, UserSignUp.id);
+                          },
+                          child: const Text(
+                            'Sign up here',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: darkBlueColour,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -149,5 +150,3 @@ class _UserLoginState extends State<UserLogin> {
     );
   }
 }
-
-
